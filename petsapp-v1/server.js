@@ -42,10 +42,10 @@ const fakeDatabase = {
 };
 
 
-// To learn more about routing:
-// Express - Hello World: http://expressjs.com/en/starter/hello-world.html
+// To learn more about server routing:
+// Express - Hello world: http://expressjs.com/en/starter/hello-world.html
 // Express - basic routing: http://expressjs.com/en/starter/basic-routing.html
-// https://expressjs.com/en/guide/routing.html
+// Express - routing: https://expressjs.com/en/guide/routing.html
 
 
 // GET a list of all usernames
@@ -63,7 +63,8 @@ app.get('/users', (req, res) => {
 //
 // To test, open these URLs in your browser:
 //   http://localhost:3000/users/Philip
-//   http://localhost:3000/users/Jane
+//   http://localhost:3000/users/Carol
+//   http://localhost:3000/users/invalidusername
 app.get('/users/:userid', (req, res) => {
   const nameToLookup = req.params.userid; // matches ':userid' above
   const val = fakeDatabase[nameToLookup];
@@ -77,5 +78,5 @@ app.get('/users/:userid', (req, res) => {
 
 // start the server at URL: http://localhost:3000/
 app.listen(3000, () => {
-  console.log('Server started at http://localhost:' + server.address().port);
+  console.log('Server started at http://localhost:3000/');
 });

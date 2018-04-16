@@ -23,7 +23,7 @@ http://localhost:3000/petsapp.html
 $(document).ready(() => {
   $('#readButton').click(() => {
     const requestURL = 'users/' + $('#nameBox').val();
-    console.log(requestURL);
+    console.log('making ajax request to:', requestURL);
 
     // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
     // Using the core $.ajax() method since it's the most flexible.
@@ -44,7 +44,7 @@ $(document).ready(() => {
           $('#status').html('Error: could not find user at URL: ' + requestURL);
           // clear the display
           $('#jobDiv').html('');
-          $('#petImage').attr('src', '');
+          $('#petImage').attr('src', '').attr('width', '0px');
         }
       },
     });
