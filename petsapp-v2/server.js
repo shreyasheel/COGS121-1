@@ -1,4 +1,5 @@
 // Node.js + Express server backend for petsapp
+// version 2 - use SQLite (https://www.sqlite.org/index.html) as a database
 //
 // COGS121 by Philip Guo
 // https://github.com/pgbovine/COGS121
@@ -13,9 +14,26 @@
 //   node server.js
 //
 // and open the frontend webpage at http://localhost:3000/petsapp.html
+//
+//
+// [optional] you can use nodemon to automatically restart your Node.js
+// server whenever your backend files change. https://nodemon.io/
+//
+// Install globally using:
+//
+// sudo npm install -g nodemon
+//
+// and then start the server using:
+//   nodemon server.js
 
 const express = require('express');
 const app = express();
+
+
+// use this library to interface with SQLite databases: https://github.com/mapbox/node-sqlite3
+const sqlite3 = require('sqlite3');
+const db = new sqlite3.Database('pets.db');
+
 
 // put all of your static files (e.g., HTML, CSS, JS, JPG) in the static_files/
 // sub-directory, and the server will serve them from there. e.g.,:
@@ -29,19 +47,6 @@ const app = express();
 app.use(express.static('static_files'));
 
 
-// simulates a database in memory, to make this example simple and
-// self-contained (so that you don't need to set up a separate database).
-// note that a real database will save its data to the hard drive so
-// that they become persistent, but this fake database will be reset when
-// this script restarts. however, as long as the script is running, this
-// database can be modified at will.
-const fakeDatabase = {
-  'Philip': {job: 'professor', pet: 'cat.jpg'},
-  'John': {job: 'student',   pet: 'dog.jpg'},
-  'Carol': {job: 'engineer',  pet: 'bear.jpg'}
-};
-
-
 // To learn more about server routing:
 // Express - Hello world: http://expressjs.com/en/starter/hello-world.html
 // Express - basic routing: http://expressjs.com/en/starter/basic-routing.html
@@ -53,9 +58,13 @@ const fakeDatabase = {
 // To test, open this URL in your browser:
 //   http://localhost:3000/users
 app.get('/users', (req, res) => {
-  const allUsernames = Object.keys(fakeDatabase); // returns a list of object keys
-  console.log('allUsernames is:', allUsernames);
-  res.send(allUsernames);
+  // db.all() fetches all results from an SQL query into the 'rows' variable:
+  db.all('SELECT name FROM users_to_pets', (err, rows) => {
+    console.log(rows);
+    const allUsernames = rows.map(e => e.name);
+    console.log(allUsernames);
+    res.send(allUsernames);
+  });
 });
 
 
@@ -67,14 +76,57 @@ app.get('/users', (req, res) => {
 //   http://localhost:3000/users/invalidusername
 app.get('/users/:userid', (req, res) => {
   const nameToLookup = req.params.userid; // matches ':userid' above
-  const val = fakeDatabase[nameToLookup];
-  console.log(nameToLookup, '->', val); // for debugging
-  if (val) {
-    res.send(val);
-  } else {
-    res.send({}); // failed, so return an empty object instead of undefined
-  }
+
+  // db.all() fetches all results from an SQL query into the 'rows' variable:
+  db.all(
+    'SELECT * FROM users_to_pets WHERE name=$name',
+    // parameters to SQL query:
+    {
+      $name: nameToLookup
+    },
+    // callback function to run when the query finishes:
+    (err, rows) => {
+      console.log(rows);
+      if (rows.length > 0) {
+        res.send(rows[0]);
+      } else {
+        res.send({}); // failed, so return an empty object instead of undefined
+      }
+    }
+  );
 });
+
+
+// POST data about a user to insert into the database
+// (note that this will insert duplicate entries!)
+//
+// To test, use the web frontend interface at:
+//   http://localhost:3000/petsapp.html
+// use this library to parse HTTP POST requests
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true})); // hook up with your app
+app.post('/users', (req, res) => {
+  console.log(req.body);
+
+  db.run(
+    'INSERT INTO users_to_pets VALUES ($name, $job, $pet)',
+    // parameters to SQL query:
+    {
+      $name: req.body.name,
+      $job: req.body.job,
+      $pet: req.body.pet,
+    },
+    // callback function to run when the query finishes:
+    (err) => {
+      if (err) {
+        res.send({message: 'error in app.post(/users)'});
+      } else {
+        res.send({message: 'successfully run app.post(/users)'});
+      }
+    }
+  );
+});
+
 
 // start the server at URL: http://localhost:3000/
 app.listen(3000, () => {
