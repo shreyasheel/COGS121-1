@@ -1,17 +1,9 @@
-// start with what's in ../petsapp-v1/ and work toward building ../petsapp-v2/
-
+// start with ../petsapp-v1/server.js and work toward building ../petsapp-v2/server.js
 const express = require('express');
 const app = express();
 
 app.use(express.static('static_files'));
 
-
-// simulates a database in memory, to make this example simple and
-// self-contained (so that you don't need to set up a separate database).
-// note that a real database will save its data to the hard drive so
-// that they become persistent, but this fake database will be reset when
-// this script restarts. however, as long as the script is running, this
-// database can be modified at will.
 const fakeDatabase = {
   'Philip': {job: 'professor', pet: 'cat.jpg'},
   'John': {job: 'student',   pet: 'dog.jpg'},
