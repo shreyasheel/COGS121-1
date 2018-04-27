@@ -52,7 +52,7 @@ $(document).ready(() => {
 
   $('#allUsersButton').click(() => {
     $.ajax({
-      url: 'users/',
+      url: 'users',
       type: 'GET',
       dataType : 'json',
       success: (data) => {
