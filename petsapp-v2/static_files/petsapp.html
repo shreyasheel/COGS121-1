@@ -67,12 +67,14 @@ $(document).ready(() => {
       // all URLs are relative to http://localhost:3000/
       url: 'users',
       type: 'POST', // <-- this is POST, not GET
-      data: {name: $('#insertNameBox').val(),
-             job: $('#insertJobBox').val(),
-             pet: $('#insertPetBox').val()},
+      data: {
+              name: $('#insertNameBox').val(),
+              job: $('#insertJobBox').val(),
+              pet: $('#insertPetBox').val()
+            },
       success: (data) => {
         $('#status').html(data.message);
-      },
+      }
     });
   });
 
