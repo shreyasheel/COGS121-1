@@ -1,6 +1,6 @@
 ### Tips for building Node.js web apps for your team project
 
-- Do not put `node_modules/` in your Git repository. Look at .gitignore
+- Do not put `node_modules/` in your Git repository. Look at [.gitignore](.gitignore)
   to see how I've ignored it from my repository.
 - Since you're using JavaScript on both the frontend *and* backend, make
   sure you're aware of which code should go in the frontend and which
