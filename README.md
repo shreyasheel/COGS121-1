@@ -6,6 +6,7 @@
   sure you're aware of which code should go in the frontend and which
   should go in the backend. For instance, you should not use jQuery
   (e.g., `$.ajax()`) in your backend code.
+- Use `console.log()` in both your frontend and backend code to understand what code is executing and when; be especially aware of *asynchronous code*, since they often appear to execute out of the expected order.
 - Try to make sure all of your teammates have the same versions of
   Node.js and npm installed (run `node -v` and `npm -v` to check your
   version numbers).
