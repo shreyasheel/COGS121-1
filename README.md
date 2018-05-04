@@ -9,6 +9,7 @@
   (e.g., `$.ajax()`) in your backend code.
 - Use `console.log()` in both your frontend and backend code to understand what code is executing and when
   - be especially aware of *asynchronous code* and callback functions, since they often execute not in the order you're expecting
+- Always remember to save your code, restart your server, and reload your frontend in your browser to see the latest edits. [nodemon](https://nodemon.io/) can automatically restart your server for you, and some browser extensions can auto-reload webpages.
 - Try to make sure all of your teammates have the same versions of
   Node.js and npm installed (run `node -v` and `npm -v` to check your
   version numbers).
