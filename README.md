@@ -2,6 +2,7 @@
 
 - Do not put `node_modules/` in your Git repository. Look at [.gitignore](.gitignore)
   to see how I've ignored it from my repository.
+- When you run `npm install` it will install the modules listed in your `package.json` file; to install individual modules that are not listed in `package.json` you need to explicitly mention their names: e.g., `npm install sqlite3`
 - Since you're using JavaScript on both the frontend *and* backend, make
   sure you're aware of which code should go in the frontend and which
   should go in the backend. For instance, you should not use jQuery
