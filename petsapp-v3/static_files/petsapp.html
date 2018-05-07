@@ -82,7 +82,7 @@ $(document).ready(() => {
     database.ref('users/').once('value', (snapshot) => {
       const data = snapshot.val();
       console.log('You received some data!', data);
-      $('#status').html('All users: ' + data);
+      $('#status').html('All users: ' + Object.keys(data));
     });
   });
 
