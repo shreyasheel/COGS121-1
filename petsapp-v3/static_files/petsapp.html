@@ -83,6 +83,10 @@ $(document).ready(() => {
 
       console.log('You received some data!', data);
       if (!data) {
+        // clear the display
+        $('#jobDiv').html('');
+        $('#petImage').attr('src', '').attr('width', '0px');
+        $('#status').html('Error: could not find user: ' + key);
         return;
       }
 
