@@ -15,8 +15,23 @@ http://localhost:3000/petsapp.html
 <head>
 <title>PetsApp</title>
 
-<!-- put your Firebase initialization code up here before all other JavaScript code -->
+<!-- put your Firebase initialization code up here before all other JavaScript code. Here's an example snippet:
 
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: <INSERT YOUR INFORMATION HERE>,
+    authDomain: <INSERT YOUR INFORMATION HERE>,
+    databaseURL: <INSERT YOUR INFORMATION HERE>,
+    projectId: <INSERT YOUR INFORMATION HERE>,
+    storageBucket: <INSERT YOUR INFORMATION HERE>,
+    messagingSenderId: <INSERT YOUR INFORMATION HERE>,
+  };
+  firebase.initializeApp(config);
+</script>
+
+-->
 
 <script src="jquery-3.3.1.min.js"></script>
 
@@ -51,7 +66,11 @@ $(document).ready(() => {
     const allUsers = snapshot.val();
     console.log('users/ changed:', allUsers);
     if (allUsers) {
-      $('#status').html('Database changed! list of users:' + Object.keys(allUsers));
+      $('#status').html(''); // clear the HTML
+      $('#status').append('List of users:');
+      Object.keys(allUsers).forEach((name) => {
+        $('#status').append('<li>' + name + ' ' + allUsers[name].job + ' ' + allUsers[name].pet + '</li>');
+      });
     }
   });
 
