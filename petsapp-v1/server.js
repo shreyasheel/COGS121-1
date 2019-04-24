@@ -65,6 +65,7 @@ app.get('/users', (req, res) => {
 //   http://localhost:3000/users/Philip
 //   http://localhost:3000/users/Carol
 //   http://localhost:3000/users/invalidusername
+// the colon in front of a path takes the items and makes it into a parameter
 app.get('/users/:userid', (req, res) => {
   const nameToLookup = req.params.userid; // matches ':userid' above
   const val = fakeDatabase[nameToLookup];
