@@ -21,13 +21,17 @@ http://localhost:3000/petsapp.html
 
 // jQuery convention for running when the document has been fully loaded:
 $(document).ready(() => {
+  // $('#') is Jquery for selecting an item by element
   $('#readButton').click(() => {
+    //.val() is a way to get the current value of a textbox in Jquery 
     const requestURL = 'users/' + $('#nameBox').val();
     console.log('making ajax request to:', requestURL);
 
     // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
     // Using the core $.ajax() method since it's the most flexible.
     // ($.get() and $.getJSON() are nicer convenience functions)
+    //ajax takes one object as a paramater
+    //ajax is a way to make a request to the server without reloading the web page 
     $.ajax({
       // all URLs are relative to http://localhost:3000/
       url: requestURL,
